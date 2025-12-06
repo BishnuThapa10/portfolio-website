@@ -1,14 +1,49 @@
 'use client'
 
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import { SiGithub } from "react-icons/si";
+import { SiLinkedin } from "react-icons/si";
 
 export default function Navbar() {
 
   const links = [
     { label: 'About', to: '#about', id: 'about' },
-    { label: 'Experience', to: '#experience', id: 'experience' },
+    // { label: 'Experience', to: '#experience', id: 'experience' },
     { label: 'Projects', to: '#projects', id: 'projects' },
   ];
+
+  const [activeId, setActiveId] = useState(links[0].id);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visibleEntries = entries
+          .filter(entry => entry.isIntersecting)
+          .sort((a, b) => a.target.offsetTop - b.target.offsetTop);
+
+        if (visibleEntries.length > 0) {
+          setActiveId(visibleEntries[0].target.id);
+        }
+      },
+      {
+        root: null,
+        rootMargin: '0px',
+        threshold: 0.5,
+      }
+    );
+
+    links.forEach(link => {
+      const section = document.getElementById(link.id);
+      if (section) observer.observe(section);
+    });
+
+    return () => {
+      links.forEach(link => {
+        const section = document.getElementById(link.id);
+        if (section) observer.unobserve(section);
+      });
+    };
+  }, [links]);
 
   return (
     <>
@@ -20,17 +55,41 @@ export default function Navbar() {
 
       <nav className='hidden lg:block' aria-label="In-page jump links">
         <ul className="mt-8 w-max">
-          {links.map((link, i) => (
-            <li key={i}>
-              <a className='group flex items-center py-3' href={link.to}>
-                <span className='nav-indicator mr-4 h-px w-8 bg-slate-600 transition-all group-hover:w-16 group-hover:bg-slate-200 group-focus-visible:w-16 group-focus-visible:bg-slate-200 motion-reduce:transition-none'></span>
-                <span className='nav-text text-xs font-bold uppercase tracking-widest transition-colors text-slate-500 group-hover:text-slate-200 group-focus-visible:text-slate-200 motion-reduce:transition-none'>{link.label}</span>
-              </a>
-            </li>
-          ))}
+          {links.map((link) => {
+            const isActive = activeId === link.id
+            return (
+              <li key={link.id}>
+                <a
+                  className='group flex items-center py-3'
+                  aria-current={activeId === link.id ? "page" : undefined} // semantic active
+                  href={link.to}>
+                  <span className={`nav-indicator mr-4 h-px w-8  transition-all motion-reduce:transition-none ${isActive ? 'w-16 bg-slate-200' : 'bg-slate-600 group-hover:w-16 group-hover:bg-slate-200 group-focus-visible:w-16 group-focus-visible:bg-slate-200 '}`}></span>
+                  <span className={`nav-text text-xs font-bold uppercase tracking-widest transition-colors  motion-reduce:transition-none ${isActive ? 'text-slate-200' : 'text-slate-500 group-hover:text-slate-200 group-focus-visible:text-slate-200'}`}>{link.label}</span>
+                </a>
+              </li>
+            )
+          })}
 
         </ul>
       </nav>
+
+      <ul className='ml-1 mt-8 flex items-center' aria-label='Social Media'>
+
+        <li className='mr-5 shrink-0 text-xs'>
+          <a className='block hover:text-slate-200' href="" target='_blank' rel='noreferrer noopener' aria-label='Github (open in new tab)' title='Github'>
+            <span className='sr-only'>Github</span>
+            <SiGithub className='h-6 w-6' aria-hidden="true" />
+          </a>
+        </li>
+
+        <li className='mr-5 shrink-0 text-xs'>
+          <a className='block hover:text-slate-200' href="" target='_blank' rel='noreferrer noopener' aria-label='LinkedIn (open in new tab)' title='LinkedIn'>
+            <span className='sr-only'>LinkedIn</span>
+            <SiLinkedin className='h-6 w-6' aria-hidden="true" />
+          </a>
+        </li>
+
+      </ul>
     </>
   )
 }
