@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { SiGithub } from "react-icons/si";
 import { SiLinkedin } from "react-icons/si";
 
@@ -14,36 +14,29 @@ export default function Navbar() {
 
   const [activeId, setActiveId] = useState(links[0].id);
 
+  // scroll spy
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const visibleEntries = entries
-          .filter(entry => entry.isIntersecting)
-          .sort((a, b) => a.target.offsetTop - b.target.offsetTop);
+    const sections = links
+      .map(l => document.getElementById(l.id))
+      .filter(Boolean);
 
-        if (visibleEntries.length > 0) {
-          setActiveId(visibleEntries[0].target.id);
+    const onScroll = () => {
+      const trigger = window.innerHeight * 0.1;
+      let current = sections[0].id;
+
+      for (const section of sections) {
+        if (section.getBoundingClientRect().top <= trigger) {
+          current = section.id;
         }
-      },
-      {
-        root: null,
-        rootMargin: '0px',
-        threshold: 0.5,
       }
-    );
 
-    links.forEach(link => {
-      const section = document.getElementById(link.id);
-      if (section) observer.observe(section);
-    });
-
-    return () => {
-      links.forEach(link => {
-        const section = document.getElementById(link.id);
-        if (section) observer.unobserve(section);
-      });
+      setActiveId(current);
     };
-  }, [links]);
+
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
 
   return (
     <>
