@@ -1,6 +1,6 @@
-import About from "./components/About.jsx";
-import Navbar from "./components/Navbar.jsx";
-import Project from "./components/Project.jsx";
+import About from "../components/About.jsx";
+import Navbar from "../components/Navbar.jsx";
+import Project from "../components/Project.jsx";
 
 
 

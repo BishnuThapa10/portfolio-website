@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { SiGithub } from "react-icons/si";
 import { SiLinkedin } from "react-icons/si";
 
@@ -14,29 +14,28 @@ export default function Navbar() {
 
   const [activeId, setActiveId] = useState(links[0].id);
 
-  // scroll spy
   useEffect(() => {
-    const sections = links
-      .map(l => document.getElementById(l.id))
-      .filter(Boolean);
-
-    const onScroll = () => {
-      const trigger = window.innerHeight * 0.1;
-      let current = sections[0].id;
-
-      for (const section of sections) {
-        if (section.getBoundingClientRect().top <= trigger) {
-          current = section.id;
-        }
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setActiveId(entry.target.id)
+          }
+        })
+      },
+      {
+        rootMargin: '-40% 0px -60% 0px', // middle of screen
+        threshold: 0,
       }
+    )
 
-      setActiveId(current);
-    };
+    links.forEach(({ id }) => {
+      const el = document.getElementById(id)
+      if (el) observer.observe(el)
+    })
 
-    onScroll();
-    window.addEventListener('scroll', onScroll, { passive: true });
-    return () => window.removeEventListener('scroll', onScroll);
-  }, []);
+    return () => observer.disconnect()
+  }, [])
 
   return (
     <>
@@ -55,6 +54,7 @@ export default function Navbar() {
                 <a
                   className='group flex items-center py-3'
                   aria-current={activeId === link.id ? "page" : undefined} // semantic active
+                  onClick={() => setActiveId(link.id)}
                   href={link.to}>
                   <span className={`nav-indicator mr-4 h-px w-8  transition-all motion-reduce:transition-none ${isActive ? 'w-16 bg-slate-200' : 'bg-slate-600 group-hover:w-16 group-hover:bg-slate-200 group-focus-visible:w-16 group-focus-visible:bg-slate-200 '}`}></span>
                   <span className={`nav-text text-xs font-bold uppercase tracking-widest transition-colors  motion-reduce:transition-none ${isActive ? 'text-slate-200' : 'text-slate-500 group-hover:text-slate-200 group-focus-visible:text-slate-200'}`}>{link.label}</span>
