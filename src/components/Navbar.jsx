@@ -8,8 +8,8 @@ export default function Navbar() {
 
   const links = [
     { label: 'About', to: '#about', id: 'about' },
-    // { label: 'Experience', to: '#experience', id: 'experience' },
     { label: 'Projects', to: '#projects', id: 'projects' },
+    { label: 'Certifications', to: '#certifications', id: 'certifications' },
   ];
 
   const [activeId, setActiveId] = useState(links[0].id);

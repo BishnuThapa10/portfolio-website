@@ -1,4 +1,5 @@
 import About from "../components/About.jsx";
+import Certifications from "../components/Certifications.jsx";
 import Navbar from "../components/Navbar.jsx";
 import Project from "../components/Project.jsx";
 
@@ -19,6 +20,10 @@ export default function Home() {
 
           <section id="projects" className="mb-16 scroll-mt-16 md:mb-24 lg:mb-36 lg:scroll-mt-24" aria-label="Selected Projects">
             <Project />
+          </section>
+
+          <section id="certifications" className="mb-16 scroll-mt-16 md:mb-24 lg:mb-36 lg:scroll-mt-24" aria-label="Training Certifications">
+            <Certifications />
           </section>
         </main>
       </div>
