@@ -1,5 +1,6 @@
 import About from "../components/About.jsx";
 import Certifications from "../components/Certifications.jsx";
+import Footer from "../components/Footer.jsx";
 import Navbar from "../components/Navbar.jsx";
 import Project from "../components/Project.jsx";
 
@@ -25,6 +26,10 @@ export default function Home() {
           <section id="certifications" className="mb-16 scroll-mt-16 md:mb-24 lg:mb-36 lg:scroll-mt-24" aria-label="Training Certifications">
             <Certifications />
           </section>
+
+          <footer className="max-w-md pb-16 text-sm text-slate-500 sm:pb-0">
+            <Footer/>
+          </footer>
         </main>
       </div>
     </div>

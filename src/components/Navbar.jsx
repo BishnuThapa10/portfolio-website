@@ -66,17 +66,17 @@ export default function Navbar() {
         </ul>
       </nav>
 
-      <ul className='ml-1 mt-8 flex items-center' aria-label='Social Media'>
+      <ul className='ml-1 mt-8 flex items-center relative z-50' aria-label='Social Media'>
 
         <li className='mr-5 shrink-0 text-xs'>
-          <a className='block hover:text-slate-200' href="" target='_blank' rel='noreferrer noopener' aria-label='Github (open in new tab)' title='Github'>
+          <a className='block hover:text-slate-200' href="https://github.com/BishnuThapa10" target='_blank' rel='noreferrer noopener' aria-label='Github (open in new tab)' title='Github'>
             <span className='sr-only'>Github</span>
             <SiGithub className='h-6 w-6' aria-hidden="true" />
           </a>
         </li>
 
         <li className='mr-5 shrink-0 text-xs'>
-          <a className='block hover:text-slate-200' href="" target='_blank' rel='noreferrer noopener' aria-label='LinkedIn (open in new tab)' title='LinkedIn'>
+          <a className='block hover:text-slate-200' href="https://www.linkedin.com/in/bishnu-thapa10/" target='_blank' rel='noreferrer noopener' aria-label='LinkedIn (open in new tab)' title='LinkedIn'>
             <span className='sr-only'>LinkedIn</span>
             <SiLinkedin className='h-6 w-6' aria-hidden="true" />
           </a>

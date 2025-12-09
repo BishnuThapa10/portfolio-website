@@ -60,7 +60,9 @@ export default function Project() {
 
         <div className='mt-12'>
           <a 
-          className="inline-flex items-center font-medium leading-tight text-slate-200 cursor-not-allowed group" aria-label="View Full Project Archive" href="#">
+          className="inline-flex items-center font-medium leading-tight text-slate-200 group" aria-label="View Full Project Archive" 
+          // href="#"
+          >
             <span>
               <span className="border-b border-transparent pb-px transition group-hover:border-teal-300 motion-reduce:transition-none">View Full Project {' '}</span>
               <span className='whitespace-nowrap'>
